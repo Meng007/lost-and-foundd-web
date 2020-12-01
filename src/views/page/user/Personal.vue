@@ -1,0 +1,15 @@
+<template>
+    <div style="height: 100%">
+        个人信息
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "Personal"
+    }
+</script>
+
+<style scoped>
+
+</style>
