@@ -62,9 +62,54 @@ const routes = [
     component: () =>import('../views/page/Admin.vue'),
     children:[
       {
-        path: '/auth',
+        path: '/admin/auth',
         name: 'auth',
         component: () =>import('../views/page/admin/Auth.vue')
+      },
+      {
+        path: '/admin/dict-data',
+        name: 'DictData',
+        component: () =>import('../views/page/admin/DictData.vue')
+      },
+      {
+        path: '/admin/dict-type',
+        name: '/DictType',
+        component: () =>import('../views/page/admin/DictType.vue')
+      },
+      {
+        path: '/admin/goods',
+        name: 'Goods',
+        component: () =>import('../views/page/admin/Goods.vue')
+      },
+      {
+        path: '/admin/goods-message',
+        name: 'GoodsMessage',
+        component: () =>import('../views/page/admin/GoodsMessage.vue')
+      },
+      {
+        path: '/admin/menu',
+        name: 'Menu',
+        component: () =>import('../views/page/admin/Menu.vue')
+      },
+      {
+        path: '/admin/message',
+        name: 'Message',
+        component: () =>import('../views/page/admin/Message.vue')
+      },
+      {
+        path: '/admin/role',
+        name: 'Role',
+        component: ()=>import('../views/page/admin/Role.vue')
+      },
+      {
+        path: '/admin/sensitive-word',
+        name: 'SensitiveWord',
+        component: ()=>import('../views/page/admin/SensitiveWord.vue')
+      },
+      {
+        path: '/admin/user',
+        name: 'User',
+        component: ()=>import('../views/page/admin/User.vue')
       }
     ]
   },
