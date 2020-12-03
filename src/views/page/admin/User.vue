@@ -41,7 +41,7 @@
                 ></el-date-picker>
               </el-form-item>
               <el-form-item>
-                <el-button type="cyan" icon="el-icon-search" size="mini" >搜索</el-button>
+                <el-button type="primary" icon="el-icon-search" size="mini" >搜索</el-button>
                 <el-button icon="el-icon-refresh" size="mini" >重置</el-button>
               </el-form-item>
             </el-form>
@@ -89,27 +89,50 @@
         <!--表格-->
         <el-table :data="userList">
             <el-table-column type="selection" width="50" align="center" />
-            <el-table-column label="编号" prop="" align="center"></el-table-column>
+            <el-table-column label="编号"  type="index" align="center"></el-table-column>
             <el-table-column label="用户名称" prop="username" align="center"></el-table-column>
             <el-table-column label="用户昵称" prop="nickName" align="center"></el-table-column>
             <el-table-column label="手机号" prop="phone" align="center"></el-table-column>
-            <el-table-column label="用户类型" prop="userType" align="center"></el-table-column>
-            <el-table-column label="用户头像" prop="avatar" align="center"></el-table-column>
-            <el-table-column label="用户状态" prop="status" align="center"></el-table-column>
-            <el-table-column label="创建时间" prop="createTime" align="center"></el-table-column>
+            <el-table-column label="用户类型" prop="userType" align="center">
+                <template slot-scope="scope">
+                    <el-tag :type="scope.row.userType ===1 ? 'primary' : 'info'">{{scope.row.typeName}}</el-tag>
+                </template>
+            </el-table-column>
+            <el-table-column label="用户头像" align="center">
+                <template slot-scope="scope">
+                    <el-avatar :src="scope.row.avatar"/>
+                </template>
+            </el-table-column>
+            <el-table-column label="用户状态" prop="status" align="center">
+                <template slot-scope="scope">
+                    <el-tooltip :content="scope.row.statusName" placement="top">
+                        <el-switch
+                                v-model="scope.row.statusName"
+                                active-color="#13ce66"
+                                inactive-color="#ff4949"
+                                active-value="启用"
+                                inactive-value="禁用"
+                        >
+                        </el-switch>
+                    </el-tooltip>
+                </template>
+            </el-table-column>
+            <el-table-column label="创建时间" prop="createTime" align="center" width="160"></el-table-column>
             <el-table-column label="操作"
                              align="center"
+                             class-name="small-padding fixed-width"
                              width="160">
               <template slot-scope="scope">
                 <el-button
                     size="mini"
                     type="text"
                     icon="el-icon-edit"
-                >修改{{scope}}</el-button>
+                >修改</el-button>
                 <el-button
                     size="mini"
                     type="text"
                     icon="el-icon-delete"
+                    @click="apiRemoveUser(scope.row.id)"
                 >删除</el-button>
                 <el-button
                     size="mini"
@@ -118,21 +141,28 @@
                 >重置</el-button>
               </template>
             </el-table-column>
-
         </el-table>
-
+        <!--分页-->
+        <el-pagination
+                :page-sizes="[10, 20, 30, 40]"
+                :page-size="query.page"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="query.total">
+        </el-pagination>
     </div>
 </template>
 
 <script>
-    import {getUserList} from '@/api/admin/User'
+    import {getUserList,removeUser} from '@/api/admin/User'
     export default {
         name: "User",
         data(){
             return{
+                //value: '启用',
                 query:{
                     page: 1,
                     size: 10,
+                    total: 0,
                     beginTime: [],
                     endTime: '',
                     username: '',
@@ -157,6 +187,19 @@
                         return
                     }
                     this.userList = res.data
+                    this.query.total = res.total
+                })
+            },
+            /**
+             * 删除用户
+             */
+            apiRemoveUser(id){
+                removeUser(id).then(res =>{
+                    if (res.code !==200){
+                        this.$message.error(res.msg)
+                        return
+                    }
+                    this.$message.success(res.msg)
                 })
             }
         }

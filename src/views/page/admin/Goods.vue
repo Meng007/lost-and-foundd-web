@@ -89,7 +89,7 @@
       <!--表格-->
       <el-table :data="goodsList">
         <el-table-column type="selection" width="50" align="center" />
-        <el-table-column label="编号" prop="id" align="center"></el-table-column>
+        <el-table-column label="编号" type="index" align="center"></el-table-column>
         <el-table-column label="物品名称" prop="goodsName" align="center"></el-table-column>
         <el-table-column label="物品标题" prop="goodsTitle" align="center"></el-table-column>
         <el-table-column label="手机号" prop="phone" align="center"></el-table-column>
@@ -106,11 +106,12 @@
                 size="mini"
                 type="text"
                 icon="el-icon-edit"
-            >修改{{scope}}</el-button>
+            >修改</el-button>
             <el-button
                 size="mini"
                 type="text"
                 icon="el-icon-delete"
+                @click="apiRemoveGoods(scope.row.id)"
             >删除</el-button>
             <el-button
                 size="mini"
@@ -119,12 +120,20 @@
             >重置</el-button>
           </template>
         </el-table-column>
-
       </el-table>
+
+      <!--分页-->
+      <el-pagination
+              :page-sizes="[10, 20, 30, 40]"
+              :page-size="query.page"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="query.total">
+      </el-pagination>
     </div>
 </template>
 
 <script>
+  import {getGoodsList} from '@/api/admin/Goods'
     export default {
         name: "Goods",
       data(){
@@ -132,6 +141,7 @@
             query:{
               page: 1,
               size: 10,
+              total: 0,
               beginTime: [],
               endTime: '',
               goodsName: '',
@@ -140,6 +150,30 @@
             },
             goodsList:[]
           }
+      },
+      created(){
+          this.apiGetGoods()
+      },
+      methods:{
+        /**
+         * 获取物品
+         */
+        apiGetGoods(){
+            getGoodsList().then(res =>{
+              if (res.code !==200){
+                this.$message.error(res.msg)
+                return
+              }
+              this.goodsList = res.data
+              this.query.total = res.total
+            })
+          },
+        /**
+         * 删除物品
+         */
+        apiRemoveGoods(id){
+            console.log(id)
+        }
       }
     }
 </script>

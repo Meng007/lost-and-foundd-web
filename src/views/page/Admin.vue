@@ -26,6 +26,7 @@
                             background-color="#304156"
                             text-color="#bfbfd0"
                             active-text-color="#2634b7"
+                            default-active="/"
                             router
                     >
                        <el-submenu index="1">

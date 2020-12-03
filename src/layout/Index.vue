@@ -3,7 +3,7 @@
         <el-container>
             <el-header height="80px">
                 <el-row type="flex" justify="center">
-                    <el-col :span="22">
+                    <el-col :span="20">
                         <div style="vertical-align: middle;height: 100%">
                             <h1 class="title threed">
                                 <a href="#">
@@ -76,7 +76,7 @@
             <!--内容-->
             <el-main >
                 <el-row type="flex" justify="center">
-                    <el-col :span="22">
+                    <el-col :span="20">
                         <router-view/>
                     </el-col>
                 </el-row>
@@ -84,7 +84,7 @@
             <!--底部-->
             <el-footer class="my-footer">
                 <el-row type="flex" justify="center">
-                    <el-col :span="22">
+                    <el-col :span="20">
                         底部
                     </el-col>
                 </el-row>
