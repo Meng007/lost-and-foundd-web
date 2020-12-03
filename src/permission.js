@@ -11,6 +11,7 @@ const whiteList = ['/login','/message', '/take', '/lost', '/register','/index','
 
 router.beforeEach((to, from, next) => {
   NProgress.start()
+  next()
   console.log(to)
   if (getToken()) {
     /* has token*/
