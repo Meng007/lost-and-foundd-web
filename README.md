@@ -1,5 +1,10 @@
 # my-vue-admin
 
+## 组件
+``
+npm install --save @riophae/vue-treeselect
+``
+
 ## Project setup
 ```
 npm install
