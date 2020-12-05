@@ -9,7 +9,13 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    redirect: '/index',
     children:[
+      {
+        path: "/index",
+        name: 'Index',
+        component: () =>import('../views/page/Index')
+      },
       {
         path: '/lost',
         name: 'lost',

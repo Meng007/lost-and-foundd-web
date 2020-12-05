@@ -3,32 +3,39 @@
   <!-- 搜索  -->
   <el-row>
     <el-form :inline="true">
-      <el-form-item label="物品名称" prop="username">
+      <el-form-item label="角色名称" prop="username">
         <el-input v-model="query.goodsName"
-                  placeholder="请输入物品名称"
+                  placeholder="请输入角色名称"
                   clearable
                   size="small"
                   style="width: 240px"
         ></el-input>
       </el-form-item>
-      <el-form-item label="物品标题" prop="nickname">
+      <el-form-item label="权限字符" prop="nickname">
         <el-input v-model="query.goodsType"
-                  placeholder="请输入物品标题"
+                  placeholder="请输入权限字符"
                   clearable
                   size="small"
                   style="width: 240px"
         ></el-input>
       </el-form-item>
-      <el-form-item label="手机号码" prop="phone">
-        <el-input
-            v-model="query.phone"
-            placeholder="请输入手机号码"
+      <el-form-item label="状态" prop="status">
+        <el-select
+            v-model="query.status"
+            placeholder="角色状态"
             clearable
             size="small"
             style="width: 240px"
-        />
+        >
+          <el-option
+              v-for="dict in statusOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+          />
+        </el-select>
       </el-form-item>
-      <el-form-item label="丢失时间">
+      <el-form-item label="创建时间">
         <el-date-picker
             v-model="query.beginTime"
             size="small"
@@ -41,7 +48,7 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="cyan" icon="el-icon-search" size="mini" >搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" >搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" >重置</el-button>
       </el-form-item>
     </el-form>
@@ -85,6 +92,48 @@
       >导出</el-button>
     </el-col>
   </el-row>
+
+<!-- 表格-->
+  <el-table v-loading="loading" :data="roleList" @selection-change="handleSelectionChange">
+    <el-table-column type="selection" width="55" align="center" />
+    <el-table-column label="角色编号" prop="roleId" width="120" />
+    <el-table-column label="角色名称" prop="roleName" :show-overflow-tooltip="true" width="150" />
+    <el-table-column label="权限字符" prop="roleKey" :show-overflow-tooltip="true" width="150" />
+    <el-table-column label="显示顺序" prop="roleSort" width="100" />
+    <el-table-column label="状态" align="center" width="100">
+
+    </el-table-column>
+    <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+    </el-table-column>
+    <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <template slot-scope="scope">
+        <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+        >修改{{scope.row.id}}</el-button>
+        <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-circle-check"
+        >数据权限</el-button>
+        <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+        >删除</el-button>
+      </template>
+    </el-table-column>
+  </el-table>
+
+  <!--分页-->
+  <!--分页-->
+  <el-pagination
+      :page-sizes="[10, 20, 30, 40]"
+      :page-size="query.page"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="query.total">
+  </el-pagination>
 </div>
 </template>
 

@@ -11,6 +11,7 @@
   height: 100%;
   margin: 0px;
   padding: 0px;
+    min-width: 1180px;
 }
 
 </style>

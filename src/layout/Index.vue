@@ -6,7 +6,7 @@
                     <el-col :span="20">
                         <div style="vertical-align: middle;height: 100%">
                             <h1 class="title threed">
-                                <a href="#">
+                                <a href="/">
                                     <el-image  class="nav-logo" :src="require('@/assets/image/lost.svg')"></el-image> <span>{{title}}</span>
                                 </a>
                             </h1>

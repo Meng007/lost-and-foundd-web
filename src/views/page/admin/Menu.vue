@@ -3,45 +3,32 @@
   <!-- 搜索  -->
   <el-row>
     <el-form :inline="true">
-      <el-form-item label="物品名称" prop="username">
+      <el-form-item label="菜单名称" prop="username">
         <el-input v-model="query.goodsName"
-                  placeholder="请输入物品名称"
+                  placeholder="请输入菜单名称"
                   clearable
                   size="small"
                   style="width: 240px"
         ></el-input>
       </el-form-item>
-      <el-form-item label="物品标题" prop="nickname">
-        <el-input v-model="query.goodsType"
-                  placeholder="请输入物品标题"
-                  clearable
-                  size="small"
-                  style="width: 240px"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="手机号码" prop="phone">
-        <el-input
-            v-model="query.phone"
-            placeholder="请输入手机号码"
+      <el-form-item label="状态" prop="status">
+        <el-select
+            v-model="query.status"
+            placeholder="菜单状态"
             clearable
             size="small"
             style="width: 240px"
-        />
-      </el-form-item>
-      <el-form-item label="丢失时间">
-        <el-date-picker
-            v-model="query.beginTime"
-            size="small"
-            style="width: 240px"
-            value-format="yyyy-MM-dd"
-            type="daterange"
-            range-separator="-"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-        ></el-date-picker>
+        >
+          <el-option
+              v-for="dict in statusOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="cyan" icon="el-icon-search" size="mini" >搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" >搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" >重置</el-button>
       </el-form-item>
     </el-form>
@@ -85,6 +72,54 @@
       >导出</el-button>
     </el-col>
   </el-row>
+
+  <!-- 表格 -->
+  <el-table
+      v-loading="loading"
+      :data="menuList"
+      row-key="menuId"
+      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+  >
+    <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="160"></el-table-column>
+    <el-table-column prop="icon" label="图标" align="center" width="100">
+      <template slot-scope="scope">
+        <svg-icon :icon-class="scope.row.icon" />
+      </template>
+    </el-table-column>
+    <el-table-column prop="orderNum" label="排序" width="60"></el-table-column>
+    <el-table-column prop="perms" label="权限标识" :show-overflow-tooltip="true"></el-table-column>
+    <el-table-column prop="component" label="组件路径" :show-overflow-tooltip="true"></el-table-column>
+    <el-table-column prop="status" label="状态" :formatter="statusFormat" width="80"></el-table-column>
+    <el-table-column label="创建时间" align="center" prop="createTime">
+      <template slot-scope="scope">
+        <span>{{ parseTime(scope.row.createTime) }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <template slot-scope="scope">
+        <el-button size="mini"
+                   type="text"
+                   icon="el-icon-edit"
+                   @click="handleUpdate(scope.row)"
+                   v-hasPermi="['system:menu:edit']"
+        >修改</el-button>
+        <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-plus"
+            @click="handleAdd(scope.row)"
+            v-hasPermi="['system:menu:add']"
+        >新增</el-button>
+        <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+            v-hasPermi="['system:menu:remove']"
+        >删除</el-button>
+      </template>
+    </el-table-column>
+  </el-table>
 </div>
 </template>
 
