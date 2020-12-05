@@ -12,7 +12,7 @@
                 ></el-input>
               </el-form-item>
               <el-form-item label="用户昵称" prop="nickname">
-                <el-input v-model="query.nickname"
+                <el-input v-model="query.nickName"
                           placeholder="请输入用户昵称"
                           clearable
                           size="small"
@@ -30,7 +30,7 @@
               </el-form-item>
               <el-form-item label="创建时间">
                 <el-date-picker
-                    v-model="query.beginTime"
+                    v-model="time"
                     size="small"
                     style="width: 240px"
                     value-format="yyyy-MM-dd"
@@ -41,8 +41,8 @@
                 ></el-date-picker>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" icon="el-icon-search" size="mini" >搜索</el-button>
-                <el-button icon="el-icon-refresh" size="mini" >重置</el-button>
+                <el-button type="primary" icon="el-icon-search" size="mini" @click.native="search">搜索</el-button>
+                <el-button icon="el-icon-refresh" size="mini" @click="reset">重置</el-button>
               </el-form-item>
             </el-form>
           </el-row>
@@ -87,7 +87,7 @@
           </el-row>
 
         <!--表格-->
-        <el-table :data="userList">
+        <el-table  v-loading="loading" :data="userList">
             <el-table-column type="selection" width="50" align="center" />
             <el-table-column label="编号"  type="index" align="center"></el-table-column>
             <el-table-column label="用户名称" prop="username" align="center"></el-table-column>
@@ -149,6 +149,34 @@
                 layout="total, sizes, prev, pager, next, jumper"
                 :total="query.total">
         </el-pagination>
+        <!--修改用户框-->
+        <el-dialog width="600px" :visible="true" append-to-body>
+            <span slot="title">修改[user]用户</span>
+           <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+                <el-row>
+                    <el-col :span="12">
+                        <el-form-item label="用户昵称">
+                            <el-input v-model="form.nickName" placeholder="请输入用户昵称" />
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="手机" prop="phone">
+                            <el-input placeholder="请输入手机号码" maxlength="11" v-model="form.phone"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="用户名称" prop="userName">
+                            <el-input v-model="form.username" placeholder="请输入用户名称" />
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item  label="用户密码" prop="password">
+                            <el-input v-model="form.password" placeholder="请输入用户密码" type="password" />
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+           </el-form>
+        </el-dialog>
     </div>
 </template>
 
@@ -159,18 +187,34 @@
         data(){
             return{
                 //value: '启用',
+                //加载
+                loading: false,
+                //搜索
                 query:{
                     page: 1,
                     size: 10,
                     total: 0,
-                    beginTime: [],
+
+                    beginTime: '',
                     endTime: '',
                     username: '',
-                    nickname: '',
+                    nickName: '',
                     phone: '',
                     userType: ''
                 },
-                userList:[]
+                //时间
+                time: [],
+                //用户列表
+                userList:[],
+                form:{
+                    username: '',
+                    nikeName: '',
+                    phone: '',
+                    password: '',
+                    email: '',
+                    status: '',
+                },
+                rules:{}
             }
         },
         created(){
@@ -181,13 +225,16 @@
              * 获取用户列表
              */
             apiGetUserList(){
+                this.loading = true
                 getUserList(this.query).then(res =>{
                     if (res.code !==200){
                         this.$message.error(res.msg)
+                        this.loading = false
                         return
                     }
                     this.userList = res.data
                     this.query.total = res.total
+                    this.loading = false
                 })
             },
             /**
@@ -201,6 +248,34 @@
                     }
                     this.$message.success(res.msg)
                 })
+            },
+            /**
+             * 搜索
+             */
+            search(){
+                console.log("-----233-----")
+                console.log(this.time)
+
+                if (this.time.length>0){
+                    console.log("--------")
+                    this.query.beginTime = this.time[0]
+                    this.query.endTime = this.time[1]
+                }
+                console.log(this.query)
+                this.apiGetUserList()
+            },
+            /**
+             * 重置搜索
+             */
+            reset(){
+               this.query.beginTime = '',
+               this.query.endTime = ''
+               this.query.username = ''
+               this.query.nickName = ''
+               this.query.phone =''
+               this.query.userType = ''
+               this.time = []
+                this.apiGetUserList()
             }
         }
     }
