@@ -54,6 +54,7 @@
                   type="primary"
                   icon="el-icon-plus"
                   size="mini"
+                  @click="addUser"
               >新增</el-button>
             </el-col>
             <el-col :span="1.5">
@@ -150,7 +151,7 @@
                 :total="query.total">
         </el-pagination>
         <!--修改用户框-->
-        <el-dialog width="600px" :visible="true" append-to-body>
+        <el-dialog width="600px" :visible="open" append-to-body>
             <span slot="title">修改[user]用户</span>
            <el-form ref="form" :model="form" :rules="rules" label-width="80px">
                 <el-row>
@@ -174,8 +175,37 @@
                             <el-input v-model="form.password" placeholder="请输入用户密码" type="password" />
                         </el-form-item>
                     </el-col>
+                  <el-col :span="12">
+                    <el-form-item  label="角色" prop="password">
+                      <el-select v-model="form.roleIds" multiple placeholder="请选择">
+                        <el-option
+                            v-for="item in roleOptions"
+                            :key="item.roleId"
+                            :label="item.roleName"
+                            :value="item.roleId"
+                            :disabled="item.status == 1"
+                        ></el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item label="状态">
+                      <el-radio-group v-model="form.status">
+                        <el-radio
+
+                        >正常</el-radio>
+                        <el-radio
+
+                        >停用</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                  </el-col>
                 </el-row>
            </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="submitForm">确 定</el-button>
+            <el-button @click="cancel">取 消</el-button>
+          </div>
         </el-dialog>
     </div>
 </template>
@@ -186,6 +216,8 @@
         name: "User",
         data(){
             return{
+                //修改、添加框控制
+                open: false,
                 //value: '启用',
                 //加载
                 loading: false,
@@ -206,6 +238,7 @@
                 time: [],
                 //用户列表
                 userList:[],
+                //用户表单
                 form:{
                     username: '',
                     nikeName: '',
@@ -213,8 +246,12 @@
                     password: '',
                     email: '',
                     status: '',
+                    roleIds:''
                 },
-                rules:{}
+                //表单规则
+                rules:{},
+                //角色列表
+               roleOptions: []
             }
         },
         created(){
@@ -253,15 +290,10 @@
              * 搜索
              */
             search(){
-                console.log("-----233-----")
-                console.log(this.time)
-
                 if (this.time.length>0){
-                    console.log("--------")
                     this.query.beginTime = this.time[0]
                     this.query.endTime = this.time[1]
                 }
-                console.log(this.query)
                 this.apiGetUserList()
             },
             /**
@@ -276,7 +308,28 @@
                this.query.userType = ''
                this.time = []
                 this.apiGetUserList()
-            }
+            },
+          /**
+           *
+           * 添加用户
+           * */
+            addUser(){
+
+              this.open = true
+            },
+           /**
+           *
+           * 修改或添加
+           */
+          submitForm(){
+            this.open = true
+          },
+          /**
+           * 取消修改或添加操作
+           */
+          cancel(){
+            this.open = false
+          }
         }
     }
 </script>

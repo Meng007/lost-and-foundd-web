@@ -12,7 +12,14 @@
       </el-carousel>
       <h3 class="lb-title">我的梦</h3>
     </div>
-    <div></div>
+    <div class="my-right">
+      <ul>
+        <li>
+          <span>1</span>
+          github官方地址 - GitHub · GitHub
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 </template>
@@ -45,7 +52,7 @@ name: "Index",
 
     .my-lb{
       position: relative;
-      width: 450px;
+      width: 650px;
       height: 310.5px;
 
       .lb-title{
@@ -53,7 +60,6 @@ name: "Index",
         bottom: 10px;
         color: white;
         cursor: pointer;
-        //width: 100%;
         text-align: center;
         right: 50%;
         margin-left: -50% ;
@@ -61,6 +67,16 @@ name: "Index",
         border-radius: 5px;
         padding: 2px;
         z-index: 9999;
+      }
+    }
+  }
+  .my-right{
+    width: 100%;
+    /*border: solid 1px red;*/
+    ul{
+
+      li{
+        list-style: none;
       }
     }
   }

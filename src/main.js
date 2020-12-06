@@ -5,7 +5,7 @@ import store from './store'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import Cookies from 'js-cookie'
-import './permission' // permission control
+//import './permission' // permission control
 //导入自定义指令
 import install from './directive'
 Vue.use(install)

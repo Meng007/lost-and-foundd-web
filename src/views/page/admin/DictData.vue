@@ -3,32 +3,23 @@
       <!-- 搜索  -->
       <el-row>
         <el-form :inline="true">
-          <el-form-item label="物品名称" prop="username">
+          <el-form-item label="字典名称" prop="username">
             <el-input v-model="query.goodsName"
-                      placeholder="请输入物品名称"
+                      placeholder="请输入字典名称"
                       clearable
                       size="small"
                       style="width: 240px"
             ></el-input>
           </el-form-item>
-          <el-form-item label="物品标题" prop="nickname">
+          <el-form-item label="数据名称" prop="nickname">
             <el-input v-model="query.goodsType"
-                      placeholder="请输入物品标题"
+                      placeholder="请输入数据名称"
                       clearable
                       size="small"
                       style="width: 240px"
             ></el-input>
           </el-form-item>
-          <el-form-item label="手机号码" prop="phone">
-            <el-input
-                v-model="query.phone"
-                placeholder="请输入手机号码"
-                clearable
-                size="small"
-                style="width: 240px"
-            />
-          </el-form-item>
-          <el-form-item label="丢失时间">
+          <el-form-item label="创建时间">
             <el-date-picker
                 v-model="query.beginTime"
                 size="small"

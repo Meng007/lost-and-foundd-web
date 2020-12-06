@@ -3,9 +3,9 @@
       <!-- 搜索  -->
       <el-row>
         <el-form :inline="true">
-          <el-form-item label="物品名称" prop="username">
+          <el-form-item label="字典名称" prop="username">
             <el-input v-model="query.goodsName"
-                      placeholder="请输入物品名称"
+                      placeholder="请输入字典名称"
                       clearable
                       size="small"
                       style="width: 240px"

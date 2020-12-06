@@ -13,6 +13,11 @@ export function getUserList(data) {
     })
 }
 
+/**
+ * 删除用户
+ * @param id
+ * @returns {AxiosPromise}
+ */
 export function removeUser(id) {
     return request({
         url: '/user/remove/'+id,
@@ -20,4 +25,16 @@ export function removeUser(id) {
     })
 }
 
+/**
+ *  修改用户
+ * @param data
+ * @returns {AxiosPromise}
+ */
+export function updateUser(data){
+    return request({
+        url: '/user/update',
+        method: 'put',
+        data: data
+    })
+}
 

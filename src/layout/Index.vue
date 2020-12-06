@@ -4,7 +4,7 @@
             <el-header height="80px">
                 <el-row type="flex" justify="center">
                     <el-col :span="20">
-                        <div style="vertical-align: middle;height: 100%">
+                        <div class="my-head" style="vertical-align: middle;height: 100%">
                             <h1 class="title threed">
                                 <a href="/">
                                     <el-image  class="nav-logo" :src="require('@/assets/image/lost.svg')"></el-image> <span>{{title}}</span>
@@ -103,11 +103,11 @@
                   lost: '/lost',
                   take: '/take',
                   message: '/message',
-                    login: '/login',
-                    admin: '/admin',
-                    user: '/user',
-                    saveGoods: '/save-goods',
-                    saveMessage: '/save-message'
+                  login: '/login',
+                  admin: '/admin',
+                  user: '/user',
+                  saveGoods: '/save-goods',
+                  saveMessage: '/save-message'
                 },
                 title: '小主平台',
                 query: ''
@@ -122,12 +122,21 @@
             })
         },
         methods:{
+          /**
+           * 推出登录
+           */
             logout(){
                 this.$store
                     .dispatch("LogOut", this.loginForm).then(res =>{
                         this.$message.success(res.msg)
                 })
-            }
+            },
+          /**
+           * 搜索
+           */
+          search(){
+           /* if ()*/
+          }
         }
     }
 </script>
@@ -168,5 +177,14 @@
         width: 100%;
         position: fixed;
         bottom: 0;
+    }
+    .el-menu.el-menu--horizontal{
+      border-bottom: 0px;
+    }
+    .my-head{
+      border-bottom: solid 1px #e6e6e6;
+      span:hover{
+        color: #409eff;
+      }
     }
 </style>
