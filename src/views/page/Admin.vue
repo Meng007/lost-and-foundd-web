@@ -63,6 +63,7 @@
                             </template>
                             <el-menu-item :index="url.dictType">字典分类</el-menu-item>
                             <el-menu-item :index="url.dictData">字典数据</el-menu-item>
+                            <el-menu-item :index="url.cate">系统分类</el-menu-item>
                             <el-menu-item :index="url.sensitiveWord">铭感词管理</el-menu-item>
                         </el-submenu>
                         <el-submenu index="6">
@@ -101,7 +102,8 @@
                     message: '/admin/message',
                     sensitiveWord: '/admin/sensitive-word',
                     goods: '/admin/goods',
-                    goodsMessage: '/admin/goods-message'
+                    goodsMessage: '/admin/goods-message',
+                    cate: '/admin/cate'
 
                 }
             }
