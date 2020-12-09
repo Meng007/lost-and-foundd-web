@@ -38,7 +38,7 @@
                                     <span>|</span>
                                 </el-menu-item>
                                 <el-menu-item class="item-menu" style="float: left">
-                                    <el-dropdown style="color:#a0cefd;"  placement="bottom" >
+                                    <el-dropdown style="color:#a0cefd;height: 100%"  placement="bottom" >
                                         <span>发布<i class="el-icon-arrow-down el-icon--right"></i>
                                         </span>
                                         <el-dropdown-menu slot="dropdown" style="padding: 0;text-align: center">
@@ -120,6 +120,9 @@
                 userType: state => state.user.userType,
                 avatar: state => state.user.avatar
             })
+        },
+        created(){
+            document.title = '小主平台首页'
         },
         methods:{
           /**

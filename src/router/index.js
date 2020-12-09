@@ -34,7 +34,7 @@ const routes = [
       {
         path: '/save-goods',
         name: 'saveGoods',
-        component: () => import('../views/page/SaveMessage.vue')
+        component: () => import('../views/page/SaveGoods.vue')
       },
       {
         path: '/save-message',

@@ -6,7 +6,10 @@
 
 <script>
     export default {
-        name: "Search"
+        name: "Search",
+        created(){
+            document.title = '小主平台|搜索'
+        },
     }
 </script>
 

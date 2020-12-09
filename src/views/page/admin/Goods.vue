@@ -91,13 +91,13 @@
         <el-table-column type="selection" width="50" align="center" />
         <el-table-column label="编号" type="index" align="center"></el-table-column>
         <el-table-column label="物品名称" prop="goodsName" align="center"></el-table-column>
-        <el-table-column label="物品标题" prop="goodsTitle" align="center"></el-table-column>
+        <el-table-column label="物品标题" prop="goodsTitle" align="center" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column label="手机号" prop="phone" align="center"></el-table-column>
         <el-table-column label="物品类型" prop="goodsType" align="center"></el-table-column>
         <el-table-column label="物品封面" prop="coverImage" align="center"></el-table-column>
         <el-table-column label="物品状态" prop="status" align="center"></el-table-column>
-        <el-table-column label="创建时间" prop="createTime" align="center"></el-table-column>
-        <el-table-column label="失物时间" prop="createTime" align="center"></el-table-column>
+        <el-table-column label="创建时间" prop="createTime" align="center" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column label="失物时间" prop="createTime" align="center" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column label="操作"
                          align="center"
                          width="160">

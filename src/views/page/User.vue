@@ -77,6 +77,9 @@
                 }
             }
         },
+        created(){
+            document.title = '小主平台|个人中心'
+        },
         computed:{
             ...mapState({
                 onLine: state => state.user.onLink,

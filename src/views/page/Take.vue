@@ -6,7 +6,10 @@
 
 <script>
     export default {
-        name: "Take"
+        name: "Take",
+        created(){
+            document.title = '小主平台|招领页'
+        },
     }
 </script>
 

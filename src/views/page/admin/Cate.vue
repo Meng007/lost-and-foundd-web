@@ -1,5 +1,43 @@
 <template>
     <div style="width: 100%;">
+        <!-- 操作菜单crud -->
+        <el-row :gutter="10" class="mb8">
+            <el-col :span="1.5">
+                <el-button
+                        type="primary"
+                        icon="el-icon-plus"
+                        size="mini"
+                >新增</el-button>
+            </el-col>
+            <el-col :span="1.5">
+                <el-button
+                        type="success"
+                        icon="el-icon-edit"
+                        size="mini"
+                >修改</el-button>
+            </el-col>
+            <el-col :span="1.5">
+                <el-button
+                        type="danger"
+                        icon="el-icon-delete"
+                        size="mini"
+                >删除</el-button>
+            </el-col>
+            <el-col :span="1.5">
+                <el-button
+                        type="info"
+                        icon="el-icon-upload2"
+                        size="mini"
+                >导入</el-button>
+            </el-col>
+            <el-col :span="1.5">
+                <el-button
+                        type="warning"
+                        icon="el-icon-download"
+                        size="mini"
+                >导出</el-button>
+            </el-col>
+        </el-row>
         <!-- 表格 -->
         <el-table
                 v-loading="loading"

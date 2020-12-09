@@ -10,3 +10,15 @@ export function getCateList() {
         method: 'get'
     })
 }
+
+/**
+ * 获取分类
+ * @param pid
+ * @returns {AxiosPromise}
+ */
+export function getSysCateList(pid) {
+    return request({
+        url: '/cate/goods/list/'+pid,
+        method: 'get'
+    })
+}

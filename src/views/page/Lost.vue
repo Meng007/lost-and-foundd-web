@@ -6,7 +6,10 @@
 
 <script>
     export default {
-        name: "Lost"
+        name: "Lost",
+        created(){
+            document.title = '小主平台|失物页'
+        },
     }
 </script>
 

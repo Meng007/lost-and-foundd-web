@@ -6,7 +6,10 @@
 
 <script>
     export default {
-        name: "Message"
+        name: "Message",
+        created(){
+            document.title = '小主平台|留言墙'
+        },
     }
 </script>
 

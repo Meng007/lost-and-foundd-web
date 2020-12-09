@@ -19,7 +19,7 @@
             </el-header>
             <el-container>
                 <!--侧边菜单-->
-                <el-aside style="height: 100%" width="200px">
+                <el-aside  style="height: 100%;" width="200px">
                     <el-menu
                             style="height: 100%;overflow: hidden"
                             mode="vertical"
@@ -46,7 +46,6 @@
                             <el-menu-item :index="url.user">用户管理</el-menu-item>
                             <el-menu-item :index="url.role">角色管理</el-menu-item>
                             <el-menu-item :index="url.menu">菜单管理</el-menu-item>
-                            <el-menu-item :index="url.perm">权限管理</el-menu-item>
                         </el-submenu>
                         <el-submenu index="2">
                             <template slot="title">
@@ -107,6 +106,9 @@
 
                 }
             }
+        },
+        created(){
+            document.title = '小主平台|管理中心'
         },
         computed:{
             ...mapState({
