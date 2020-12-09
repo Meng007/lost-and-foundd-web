@@ -147,10 +147,21 @@
                     new Doc(),
                     new Text(),
                     new Paragraph(),
-                    new Heading({ level: 5 }),//标题5
-                    new Image(),//图片
-                    new Bold({ bubble: true }), // 在气泡菜单中渲染菜单按钮
-                    new Underline({ bubble: true, menubar: false }), // 在气泡菜单而不在菜单栏中渲染菜单按钮
+                    new Heading({
+                        level: 5
+                    }),//标题5
+                    new Image({
+                        uploadRequest(){
+                            return 'http://localhost:8080/static/img/profile.9e7a51a3.jpg'
+                        }
+                    }),//图片
+                    new Bold({
+                        bubble: true
+                    }), // 在气泡菜单中渲染菜单按钮
+                    new Underline({
+                        bubble: true,
+                        menubar: false
+                    }), // 在气泡菜单而不在菜单栏中渲染菜单按钮
                     new Italic(),//斜体
                     new TextColor(),//文字颜色
                     new Strike(),//删除线
