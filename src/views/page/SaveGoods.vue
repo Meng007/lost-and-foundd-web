@@ -1,9 +1,8 @@
 <template>
     <div style="width: 100%;">
-
-            <el-row v-loading="loading" :gutter="4">
+        <el-row v-loading="loading" :gutter="4">
             <el-form :model="goodsForm" label-position="right">
-            <el-col :span="12">
+                <el-col :span="12">
                     <el-form-item label="标题" label-width="120px">
                         <el-input v-model="goodsForm.goodsTitle"/>
                     </el-form-item>
@@ -65,16 +64,13 @@
                         </el-col>
                     </el-row>
             </el-col>
-            <el-col :span="12">
+                <el-col :span="12">
                 <el-tiptap height="545px"  placeholder="请输入描述内容" v-model="goodsForm.goodsContent" :extensions="extensions"></el-tiptap>
-            </el-col>
-                <el-form-item >
-                    <el-button type="primary" size="mini">发布</el-button>
-                    <el-button type="info" size="mini">取消</el-button>
-                </el-form-item>
+                </el-col>
+                <el-button type="primary" size="mini">发布</el-button>
+                <el-button type="info" size="mini">取消</el-button>
             </el-form>
         </el-row>
-
     </div>
 </template>
 
