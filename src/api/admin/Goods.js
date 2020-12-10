@@ -61,3 +61,11 @@ export function goodsTopping(id){
         method: 'put'
     })
 }
+
+export function fileUpload(data) {
+    return request({
+        url: '/file/upload',
+        method: 'post',
+        data: data
+    })
+}

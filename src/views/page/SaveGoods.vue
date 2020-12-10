@@ -1,10 +1,8 @@
 <template>
     <div style="width: 100%;">
-        <el-row v-loading="loading" :gutter="4">
+
+            <el-row v-loading="loading" :gutter="4">
             <el-form :model="goodsForm" label-position="right">
-                <el-form-item style="position: relative">
-                    <el-button style="position: absolute;right: 10px;z-index: 9999;"  type="primary" size="mini">发布</el-button>
-                </el-form-item>
             <el-col :span="12">
                     <el-form-item label="标题" label-width="120px">
                         <el-input v-model="goodsForm.goodsTitle"/>
@@ -70,8 +68,13 @@
             <el-col :span="12">
                 <el-tiptap height="545px"  placeholder="请输入描述内容" v-model="goodsForm.goodsContent" :extensions="extensions"></el-tiptap>
             </el-col>
+                <el-form-item >
+                    <el-button type="primary" size="mini">发布</el-button>
+                    <el-button type="info" size="mini">取消</el-button>
+                </el-form-item>
             </el-form>
         </el-row>
+
     </div>
 </template>
 
@@ -93,10 +96,12 @@
         TodoList,
         Fullscreen,
         Image,
+        TextAlign,
         TextColor
     }
     from 'element-tiptap'
     import {getSysCateList} from '@/api/admin/Cate'
+    import {fileUpload} from '@/api/admin/Goods'
     export default {
         name: "SaveGoods",
         components:{
@@ -151,8 +156,15 @@
                         level: 5
                     }),//标题5
                     new Image({
-                        uploadRequest(){
-                            return 'http://localhost:8080/static/img/profile.9e7a51a3.jpg'
+                        uploadRequest(file){
+                            console.log("----------")
+                            console.log(file)
+                            const f = new FormData()
+                            f.append("file",file)
+                            return fileUpload(f).then(res =>{
+                                res.code
+                                return res.data.fileUrl
+                            })
                         }
                     }),//图片
                     new Bold({
@@ -165,6 +177,7 @@
                     new Italic(),//斜体
                     new TextColor(),//文字颜色
                     new Strike(),//删除线
+                    new TextAlign(),
                     new ListItem(),
                     new BulletList(),//无序列表
                     new OrderedList(),//有序列表

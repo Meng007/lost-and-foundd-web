@@ -82,7 +82,7 @@
                 </el-row>
             </el-main>
             <!--底部-->
-            <el-footer class="my-footer">
+            <el-footer >
                 <el-row type="flex" justify="center">
                     <el-col :span="20">
                         底部
