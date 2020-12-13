@@ -62,10 +62,54 @@ export function goodsTopping(id){
     })
 }
 
+/**
+ * 文件上传
+ * @param data
+ * @returns {AxiosPromise}
+ */
 export function fileUpload(data) {
     return request({
         url: '/file/upload',
         method: 'post',
         data: data
+    })
+}
+
+/**
+ * 保存物品
+ * @param data
+ * @returns {AxiosPromise}
+ */
+export function saveGoods(data) {
+    return request({
+        url: '/goods/save',
+        method: 'post',
+        data: data
+    })
+}
+
+/**
+ * 获取失物
+ * @param data
+ * @returns {AxiosPromise}
+ */
+export function getLostGoods(data) {
+    return request({
+        url: '/goods/lost/list',
+        method: 'get',
+        params: data
+    })
+}
+
+/**
+ * 获取招领
+ * @param data
+ * @returns {AxiosPromise}
+ */
+export function getTakeGoods(data) {
+    return request({
+        url: '/goods/take/list',
+        method: 'get',
+        params: data
     })
 }

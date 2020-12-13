@@ -3,6 +3,9 @@
 ## 组件
 ``
 npm install --save @riophae/vue-treeselect
+
+vue-treeselect
+
 ``
 
 ## Project setup

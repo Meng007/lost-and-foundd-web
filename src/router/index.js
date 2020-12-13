@@ -40,7 +40,13 @@ const routes = [
         path: '/save-message',
         name: '/saveMessage',
         component: () =>import('../views/page/SaveMessage.vue')
-      }
+      },
+      {
+        path: '/search',
+        name: 'search',
+        component: () =>import('../views/page/Search.vue')
+      },
+      {path: '/goods/info',name: '/info',component: () =>import('../views/page/GoodsInfo.vue')}
     ]
   },
   {

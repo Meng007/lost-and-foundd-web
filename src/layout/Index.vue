@@ -23,7 +23,7 @@
                                             style="width: 208px;"
                                             size="medium"
                                             v-model="query"></el-input>
-                                    <el-button size="small"><span style="color: #a0cefd">搜索</span></el-button>
+                                    <el-button size="small" @click="search"><span style="color: #a0cefd">搜索</span></el-button>
                                 </el-menu-item>
                                 <el-menu-item :index="url.lost" class="item-menu" style="float: left">
                                     <span>寻物</span>
@@ -139,6 +139,10 @@
            */
           search(){
            /* if ()*/
+              const text = this.query
+              if(text && text !==''){
+                  this.$router.push({path:'/search',query:{text:text}})
+              }
           }
         }
     }

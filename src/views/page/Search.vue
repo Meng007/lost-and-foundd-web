@@ -1,6 +1,6 @@
 <template>
-    <div>
-        搜索页
+    <div style="height: 100%">
+        {{this.$route.query.text}}
     </div>
 </template>
 
