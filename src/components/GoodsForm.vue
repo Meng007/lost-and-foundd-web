@@ -14,8 +14,8 @@
                         </el-col>
                         <el-col :span="12">
                             <el-form-item label-width="120px" label="启事类型">
-                                <el-radio v-model="goodsForm.goodsStatus" label="1">丢失</el-radio>
-                                <el-radio v-model="goodsForm.goodsStatus" label="2">拾起</el-radio>
+                                <el-radio v-model="goodsForm.goodsStatus" :label="1">丢失</el-radio>
+                                <el-radio v-model="goodsForm.goodsStatus" :label="2">拾起</el-radio>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
@@ -52,25 +52,30 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
-                            <el-form-item label-width="120px" label="封面图">
-                                <el-upload
-                                        :http-request="submitIcon"
-                                        :headers="headers"
-                                        class="avatar-uploader"
-                                        :on-success="coverImageUploadSuccess"
-                                        :action="fileUploadUrl"
-                                        :show-file-list="false">
-                                    <img v-if="goodsForm.coverImage" :src="goodsForm.coverImage" class="avatar">
-                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                                </el-upload>
+                        <el-form-item label-width="120px" label="封面图">
+                            <el-upload
+                                    :http-request="submitIcon"
+                                    :headers="headers"
+                                    class="avatar-uploader"
+                                    :on-success="coverImageUploadSuccess"
+                                    :action="fileUploadUrl"
+                                    :show-file-list="false">
+                                <img v-if="goodsForm.coverImage" :src="goodsForm.coverImage" class="avatar">
+                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                            </el-upload>
+                        </el-form-item>
+                    </el-col>
+                        <el-col :span="12">
+                            <el-form-item label-width="120px" label="丢（拾）地点">
+                               <el-input placeholder="请输入丢（拾）地点" v-model="goodsForm.address"/>
                             </el-form-item>
                         </el-col>
                     </el-row>
                 </el-col>
                 <el-col :span="12">
-                    <el-tiptap height="545px"  placeholder="请输入描述内容" v-model="goodsForm.goodsContent" :extensions="extensions"></el-tiptap>
+                    <el-tiptap height="500px"  placeholder="请输入描述内容" v-model="goodsForm.goodsContent" :extensions="extensions"></el-tiptap>
                 </el-col>
-                <el-button type="primary" size="mini" v-if="goodsForm.id" @click="apiSaveGoods">修改</el-button>
+                <el-button type="primary" size="mini" v-if="goodsForm.id" @click="apiUpdateGoods">修改</el-button>
                 <el-button type="primary" size="mini" v-else @click="apiSaveGoods">发布</el-button>
                 <el-button type="info" size="mini" @click="open = false">取消</el-button>
             </el-form>
@@ -102,7 +107,7 @@
     }
         from 'element-tiptap'
     import {getSysCateList} from '@/api/admin/Cate'
-    import {fileUpload,saveGoods} from '@/api/admin/Goods'
+    import {fileUpload,saveGoods,updateGoods} from '@/api/admin/Goods'
     import {getToken} from '@/utils/auth'
     import request from '@/utils/request'
     export default {
@@ -246,6 +251,16 @@
                     }
                 })
             },
+            //修改
+            apiUpdateGoods(){
+                updateGoods(this.goodsForm).then(res =>{
+                    if (res.code !==200){
+                        this.$message.error(res.msg)
+                        return
+                    }
+                    this.$message.success(res.msg)
+                })
+            }
         }
     }
 </script>

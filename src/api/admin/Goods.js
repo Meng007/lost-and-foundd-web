@@ -113,3 +113,14 @@ export function getTakeGoods(data) {
         params: data
     })
 }
+
+/**
+ *  获取分类
+ * @returns {AxiosPromise}
+ */
+export function getGoodsCate() {
+    return request({
+        url: '/cate/goods/list/'+1,
+        method: 'get'
+    })
+}

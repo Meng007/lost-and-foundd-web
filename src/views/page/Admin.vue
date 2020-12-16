@@ -1,80 +1,83 @@
 <template>
     <div style="height: 100%;">
         <el-container style="height: 100%">
-            <!--头部-->
-            <el-header style="background: #304156">
-                <h1 class="title">
-                    <a href="#">{{title}}</a>
-                </h1>
-                <el-dropdown class="my-avatar">
+            <!--侧边菜单-->
+            <el-aside  style="height: 100%;" width="200px">
+                <el-menu
+                        style="height: 100%;overflow: hidden"
+                        mode="vertical"
+                        background-color="#304156"
+                        text-color="#bfbfd0"
+                        active-text-color="#2634b7"
+                        default-active="/"
+                        router
+                >
+                   <el-menu-item>
+                       <h1 class="title">
+                           <a href="#">{{title}}</a>
+                       </h1>
+                   </el-menu-item>
+                    <el-submenu index="1">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">认证中心</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item :index="url.auth">令牌管理</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="5">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">后台管理</span>
+                        </template>
+                        <el-menu-item :index="url.user">用户管理</el-menu-item>
+                        <el-menu-item :index="url.role">角色管理</el-menu-item>
+                        <el-menu-item :index="url.menu">菜单管理</el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="2">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">物品管理</span>
+                        </template>
+                        <el-menu-item :index="url.goods">物品列表</el-menu-item>
+                        <el-menu-item :index="url.goodsMessage">物品留言</el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="3">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">字典管理</span>
+                        </template>
+                        <el-menu-item :index="url.dictType">字典分类</el-menu-item>
+                        <el-menu-item :index="url.dictData">字典数据</el-menu-item>
+                        <el-menu-item :index="url.cate">系统分类</el-menu-item>
+                        <el-menu-item :index="url.sensitiveWord">铭感词管理</el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="6">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">消息中心</span>
+                        </template>
+                        <el-menu-item :index="url.message">消息列表</el-menu-item>
+                        <el-menu-item>系统公告</el-menu-item>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+            <el-container>
+                <!--头部-->
+                <el-header>
+                       <el-dropdown class="my-avatar">
                     <span class="el-dropdown-link">
                         <el-avatar :src="avatar"></el-avatar>
                         <i class="el-icon-arrow-down el-icon--right"></i>
                      </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>返回首页</el-dropdown-item>
-                        <el-dropdown-item>退出登录</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
-            </el-header>
-            <el-container>
-                <!--侧边菜单-->
-                <el-aside  style="height: 100%;" width="200px">
-                    <el-menu
-                            style="height: 100%;overflow: hidden"
-                            mode="vertical"
-                            background-color="#304156"
-                            text-color="#bfbfd0"
-                            active-text-color="#2634b7"
-                            default-active="/"
-                            router
-                    >
-                       <el-submenu index="1">
-                           <template slot="title">
-                               <i class="el-icon-location"></i>
-                               <span slot="title">认证中心</span>
-                           </template>
-                           <el-menu-item-group>
-                               <el-menu-item :index="url.auth">令牌管理</el-menu-item>
-                           </el-menu-item-group>
-                       </el-submenu>
-                        <el-submenu index="5">
-                            <template slot="title">
-                                <i class="el-icon-location"></i>
-                                <span slot="title">后台管理</span>
-                            </template>
-                            <el-menu-item :index="url.user">用户管理</el-menu-item>
-                            <el-menu-item :index="url.role">角色管理</el-menu-item>
-                            <el-menu-item :index="url.menu">菜单管理</el-menu-item>
-                        </el-submenu>
-                        <el-submenu index="2">
-                            <template slot="title">
-                                <i class="el-icon-location"></i>
-                                <span slot="title">物品管理</span>
-                            </template>
-                            <el-menu-item :index="url.goods">物品列表</el-menu-item>
-                            <el-menu-item :index="url.goodsMessage">物品留言</el-menu-item>
-                        </el-submenu>
-                        <el-submenu index="3">
-                            <template slot="title">
-                                <i class="el-icon-location"></i>
-                                <span slot="title">字典管理</span>
-                            </template>
-                            <el-menu-item :index="url.dictType">字典分类</el-menu-item>
-                            <el-menu-item :index="url.dictData">字典数据</el-menu-item>
-                            <el-menu-item :index="url.cate">系统分类</el-menu-item>
-                            <el-menu-item :index="url.sensitiveWord">铭感词管理</el-menu-item>
-                        </el-submenu>
-                        <el-submenu index="6">
-                            <template slot="title">
-                                <i class="el-icon-location"></i>
-                                <span slot="title">消息中心</span>
-                            </template>
-                            <el-menu-item :index="url.message">消息列表</el-menu-item>
-                            <el-menu-item>系统公告</el-menu-item>
-                        </el-submenu>
-                    </el-menu>
-                </el-aside>
+                           <el-dropdown-menu slot="dropdown">
+                               <el-dropdown-item>返回首页</el-dropdown-item>
+                               <el-dropdown-item>退出登录</el-dropdown-item>
+                           </el-dropdown-menu>
+                       </el-dropdown>
+                </el-header>
+
                 <el-main>
                     <router-view/>
                 </el-main>
@@ -122,7 +125,6 @@
 
 <style scoped lang="less">
 .title{
-    float: left;
     margin: 0;
     line-height: 60px;
     a{

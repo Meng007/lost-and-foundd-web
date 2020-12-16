@@ -8,7 +8,7 @@
                    </el-form-item>
                    <el-form-item label-width="120px" label="选择图片">
                        <el-upload
-                               action="https://jsonplaceholder.typicode.com/posts/"
+                               :http-request="submitIcon"
                                list-type="picture-card"
                                :on-preview="handlePictureCardPreview"
                                :on-remove="handleRemove">
@@ -32,10 +32,13 @@
 </template>
 
 <script>
+    import request from '@/utils/request'
     export default {
         name: "SaveMessage",
         data(){
            return{
+               //文件上传地址
+               fileUploadUrl: 'file/upload',
                dialogVisible: false,
                dialogImageUrl: '',
                message:{
@@ -54,8 +57,27 @@
             handlePictureCardPreview(file) {
                 this.dialogImageUrl = file.url;
                 this.dialogVisible = true;
-            }
-        }
+            } ,
+            /**
+             * 自定义文件上传
+             */
+            submitIcon(file){
+                console.log(file);
+                const f = new FormData()
+                f.append("file",file.file)
+                request({
+                    url: this.fileUploadUrl,
+                    data: f,
+                    method: 'post',
+                    headers: { "Content-Type": "multipart/form-data;"}
+                }).then(res =>{
+                    if (res.code ===200){
+                        //this.goodsForm.coverImage = res.data.fileUrl
+                    }
+                })
+            },
+        },
+
     }
 </script>
 

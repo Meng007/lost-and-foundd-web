@@ -12,7 +12,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="物品标题" prop="nickname">
-            <el-input v-model="query.goodsType"
+            <el-input v-model="query.goodsTitle"
                       placeholder="请输入物品标题"
                       clearable
                       size="small"
@@ -30,7 +30,7 @@
           </el-form-item>
           <el-form-item label="丢失时间">
             <el-date-picker
-                v-model="query.beginTime"
+                v-model="time"
                 size="small"
                 style="width: 240px"
                 value-format="yyyy-MM-dd"
@@ -41,8 +41,8 @@
             ></el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button type="cyan" icon="el-icon-search" size="mini" >搜索</el-button>
-            <el-button icon="el-icon-refresh" size="mini" >重置</el-button>
+            <el-button type="cyan" icon="el-icon-search" size="mini" @click="searchGoods">搜索</el-button>
+            <el-button icon="el-icon-refresh" size="mini" @click="resetSearch" >重置</el-button>
           </el-form-item>
         </el-form>
       </el-row>
@@ -54,9 +54,10 @@
               type="primary"
               icon="el-icon-plus"
               size="mini"
+              @click="apiAddGoods"
           >新增</el-button>
         </el-col>
-        <el-col :span="1.5">
+      <!--  <el-col :span="1.5">
           <el-button
               type="success"
               icon="el-icon-edit"
@@ -69,14 +70,14 @@
               icon="el-icon-delete"
               size="mini"
           >删除</el-button>
-        </el-col>
-        <el-col :span="1.5">
+        </el-col>-->
+       <!-- <el-col :span="1.5">
           <el-button
               type="info"
               icon="el-icon-upload2"
               size="mini"
           >导入</el-button>
-        </el-col>
+        </el-col>-->
         <el-col :span="1.5">
           <el-button
               type="warning"
@@ -87,14 +88,19 @@
       </el-row>
 
       <!--表格-->
-      <el-table :data="goodsList">
-        <el-table-column type="selection" width="50" align="center" />
+      <el-table :data="goodsList" v-loading="loading">
+       <!-- <el-table-column type="selection" width="50" align="center" />-->
         <el-table-column label="编号" type="index" align="center"></el-table-column>
         <el-table-column label="物品名称" prop="goodsName" align="center"></el-table-column>
         <el-table-column label="物品标题" prop="goodsTitle" align="center" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column label="手机号" prop="phone" align="center"></el-table-column>
+        <el-table-column label="地址" prop="address" align="center" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column label="物品类型" prop="goodsType" align="center"></el-table-column>
-        <el-table-column label="物品封面" prop="coverImage" align="center"></el-table-column>
+        <el-table-column label="物品封面" prop="coverImage" align="center">
+          <template slot-scope="scope">
+            <el-image :src="scope.row.coverImage"/>
+          </template>
+        </el-table-column>
         <el-table-column label="物品状态" prop="status" align="center"></el-table-column>
         <el-table-column label="创建时间" prop="createTime" align="center" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column label="失物时间" prop="createTime" align="center" :show-overflow-tooltip="true"></el-table-column>
@@ -106,6 +112,7 @@
                 size="mini"
                 type="text"
                 icon="el-icon-edit"
+                @click="apiUpdateGoods(scope.row.id)"
             >修改</el-button>
             <el-button
                 size="mini"
@@ -113,11 +120,6 @@
                 icon="el-icon-delete"
                 @click="apiRemoveGoods(scope.row.id)"
             >删除</el-button>
-            <el-button
-                size="mini"
-                type="text"
-                icon="el-icon-key"
-            >重置</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -129,26 +131,57 @@
               layout="total, sizes, prev, pager, next, jumper"
               :total="query.total">
       </el-pagination>
+
+      <!--怎加修改对话框-->
+      <el-dialog :visible="open" width="80%">
+        <span slot="title">{{dialogTime}}</span>
+        <GoodsForm :goods-form="goodsForm" />
+      </el-dialog>
     </div>
 </template>
 
 <script>
-  import {getGoodsList} from '@/api/admin/Goods'
+  import GoodsForm from '@/components/GoodsForm'
+  import {getGoodsList,getGoodsInfo,removeGoods} from '@/api/admin/Goods'
     export default {
         name: "Goods",
+      components:{
+        GoodsForm
+      },
       data(){
           return{
             query:{
               page: 1,
               size: 10,
               total: 0,
-              beginTime: [],
+              beginTime: '',
               endTime: '',
               goodsName: '',
               goodsType: '',
+              goodsTitle: '',
               phone: ''
             },
-            goodsList:[]
+            //加载
+            loading: false,
+            //时间
+            time: [],
+            //物品列表
+            goodsList:[],
+            //对话框标题
+            dialogTime: '',
+            open: false,
+            //表单
+            goodsForm: {
+              goodsTitle: '',
+              goodsName: '',
+              goodsContent: '',
+              loseTime: '',
+              coverImage: '',
+              goodsType: '',
+              phone: '',
+              linkman: '',
+              goodsStatus: '1'
+            },
           }
       },
       created(){
@@ -159,20 +192,75 @@
          * 获取物品
          */
         apiGetGoods(){
-            getGoodsList().then(res =>{
+          this.loading = true
+            getGoodsList(this.query).then(res =>{
               if (res.code !==200){
                 this.$message.error(res.msg)
+                this.loading = false
                 return
               }
               this.goodsList = res.data
               this.query.total = res.total
+              this.loading = false
             })
           },
         /**
          * 删除物品
          */
         apiRemoveGoods(id){
-            console.log(id)
+          this.$confirm('永久删除该物品，是否继续？','提示',{
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then( ()=>{
+            this.remove(id);
+          }).catch(() =>{
+            this.$message.info('取消删除操作')
+          })
+        },
+        //删除操作
+        remove(id){
+          removeGoods(id).then(res =>{
+            if (res.code !==200){
+              this.$message.error(res.msg)
+              return
+            }
+            this.$message.success(res.msg)
+            this.apiGetGoods()
+          })
+        },
+        //添加物品
+        apiAddGoods(){
+          this.dialogTime = '添加物品'
+          this.open = true
+        },
+        //修改物品
+        apiUpdateGoods(id){
+          getGoodsInfo(id).then(res =>{
+            if (res.code !==200){
+              this.$message.error(res.msg)
+              return
+            }
+            this.goodsForm = res.data
+            this.open = true
+          })
+        },
+        //搜索
+        searchGoods(){
+          if (this.time.length>0){
+            this.query.beginTime = this.time[0]
+            this.query.endTime = this.time[0]
+          }
+          this.apiGetGoods()
+        },
+        //重置搜索
+        resetSearch(){
+          this.query.endTime = ''
+          this.query.beginTime = ''
+          this.query.goodsName  = ''
+          this.query.goodsTitle = ''
+          this.query.goodsType = ''
+          this.apiGetGoods()
         }
       }
     }
