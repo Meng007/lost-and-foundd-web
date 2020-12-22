@@ -22,3 +22,30 @@ export function getSysCateList(pid) {
         method: 'get'
     })
 }
+
+/**
+ * 添加系统分类
+ * @param data
+ * @returns {AxiosPromise}
+ */
+export function addCate(data) {
+    return request({
+        url: '/cate/save',
+        method: 'post',
+        data: data
+    })
+
+}
+
+/**
+ * 删除分类
+ * @param id
+ * @returns {AxiosPromise}
+ */
+export function removeCate(id) {
+    return request({
+        url: '/cate/remove/'+id,
+        method: 'delete'
+    })
+
+}

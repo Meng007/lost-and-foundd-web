@@ -48,7 +48,7 @@
               @click="apiAddDictType"
           >新增</el-button>
         </el-col>
-        <el-col :span="1.5">
+       <!-- <el-col :span="1.5">
           <el-button
               type="success"
               icon="el-icon-edit"
@@ -68,7 +68,7 @@
               icon="el-icon-upload2"
               size="mini"
           >导入</el-button>
-        </el-col>
+        </el-col>-->
         <el-col :span="1.5">
           <el-button
               type="warning"
@@ -149,7 +149,7 @@
 </template>
 
 <script>
-  import {getDictTypeList,addDictType,updateDictType} from '@/api/admin/DictType'
+  import {getDictTypeList,addDictType,updateDictType,removeDictType} from '@/api/admin/DictType'
     export default {
         name: "DictType",
       data(){
@@ -237,7 +237,27 @@
         /**
          * 删除字典类型
          */
-        apiRemoveDictType(){
+        apiRemoveDictType(id){
+
+          if (id){
+            this.$confirm('永久删除该字典分类，是否继续','提示',{
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() =>{
+              //删除操作
+              removeDictType(id).then(res =>{
+                if (res.code !==200){
+                  this.$message.error(res.msg)
+                  return
+                }
+                this.$message.success(res.msg)
+                this.apiGetDictType()
+              })
+            }).catch(() =>{
+              this.$message.info("已取消删除操作！")
+            })
+          }
 
         },
         /**
@@ -296,7 +316,9 @@
           this.form.dictType = ''
           this.form.dictName = ''
           this.form.status = '1'
-        }
+        },
+        //删除字典类型
+
       }
     }
 </script>

@@ -64,3 +64,16 @@ export function echoDictData(id) {
     })
 }
 
+/**
+ *  获取字典数据  dictType
+ * @param dictType
+ * @returns {AxiosPromise}
+ */
+export function getDictDataByDictType(dictType) {
+    return request({
+        url: '/dict-data/'+dictType,
+        method: 'get'
+    })
+}
+
+
