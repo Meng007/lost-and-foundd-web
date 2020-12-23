@@ -101,7 +101,7 @@
             </el-table-column>
             <el-table-column label="用户头像" align="center">
                 <template slot-scope="scope">
-                    <el-avatar :src="scope.row.avatar"/>
+                    <el-avatar :src="scope.row.avatar ===null?require('@/assets/image/profile.jpg'):scope.row.avatar"/>
                 </template>
             </el-table-column>
             <el-table-column label="用户状态" prop="status" align="center">

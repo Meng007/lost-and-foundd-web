@@ -12,13 +12,14 @@ const whiteList = ['/login','/message', '/take', '/lost', '/register','/index','
 router.beforeEach((to, from, next) => {
   NProgress.start()
   //next()
-  console.log(to)
+  //console.log(to)
   if (getToken()) {
     /* has token*/
     if (to.path === '/login') {
       next({ path: '/' })
       NProgress.done()
     } else {
+
       if (store.getters.roles.length === 0) {
         // 判断当前用户是否已拉取完user_info信息
         store.dispatch('GetInfo').then(res => {
