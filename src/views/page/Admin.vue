@@ -14,6 +14,7 @@
                 >
                    <el-menu-item>
                        <h1 class="title">
+                           <i class="el-icon-s-home"></i>
                            <a href="#">{{title}}</a>
                        </h1>
                    </el-menu-item>
@@ -72,12 +73,16 @@
                         <i class="el-icon-arrow-down el-icon--right"></i>
                      </span>
                            <el-dropdown-menu slot="dropdown">
-                               <el-dropdown-item>返回首页</el-dropdown-item>
-                               <el-dropdown-item>退出登录</el-dropdown-item>
+                              <router-link to="/">
+                                  <el-dropdown-item>返回首页</el-dropdown-item>
+                              </router-link>
+                               <router-link tag="a" :to="url.personal">
+                                   <el-dropdown-item >个人信息</el-dropdown-item>
+                               </router-link>
+                               <el-dropdown-item><span class="text" @click="logout">退出登录</span></el-dropdown-item>
                            </el-dropdown-menu>
                        </el-dropdown>
                 </el-header>
-
                 <el-main>
                     <router-view/>
                 </el-main>
@@ -105,8 +110,8 @@
                     sensitiveWord: '/admin/sensitive-word',
                     goods: '/admin/goods',
                     goodsMessage: '/admin/goods-message',
-                    cate: '/admin/cate'
-
+                    cate: '/admin/cate',
+                    personal: '/admin/personal'
                 }
             }
         },
@@ -120,6 +125,18 @@
                 avatar: state => state.user.avatar
             })
         },
+        methods:{
+            /**
+             * 推出登录
+             */
+            logout(){
+                this.$store
+                    .dispatch("LogOut", this.loginForm).then(res =>{
+                    this.$message.success(res.msg)
+                    this.$router.push('/')
+                })
+            },
+        }
     }
 </script>
 
@@ -138,5 +155,8 @@
         top: 6px;
         right: 5px;
         cursor: pointer;
+    }
+    a{
+        text-decoration: none;
     }
 </style>

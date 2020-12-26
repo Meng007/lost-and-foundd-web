@@ -11,7 +11,7 @@
                 </div>
                 <div class="title-body">
                     <div class="body-left">
-                        <router-link :to="{path: 'goods/info',query:{goodsId:item.id}}"><el-tag type="danger">{{item.goodsType ===1 ?'失物...':'招领...'}}</el-tag>{{item.goodsTitle}}</router-link>
+                        <router-link :to="{path: 'goods/info',query:{goodsId:item.id}}"><el-tag :type="item.goodsStatus ===1 ?'danger':'primary'">{{item.goodsStatus ===1 ?'失物...':'招领...'}}</el-tag><span v-html="item.goodsTitle"></span></router-link>
                         <div>
                             <i class="el-icon-location-outline"></i> {{item.address}}
                         </div>
@@ -31,7 +31,7 @@
                     </div>
                     <div class="person">
                         <div class="person-">
-                            <el-avatar shape="square" src="http://localhost:8080/static/img/profile.9e7a51a3.jpg"></el-avatar>
+                            <el-avatar shape="square" :src="item.avatar"></el-avatar>
                             <div class="name">{{item.nickName}}</div>
                             <el-tooltip effect="light" content="丢失日期" placement="top">
                                 <span class="goods-info-item text"><i class="el-icon-date"></i>{{item.loseTime}}</span>
@@ -121,7 +121,7 @@
     }
     .goods-info-item{
         display: inline-block;
-        margin: 0 2px;
+        margin: 0 8px;
     }
     .text{
         overflow: hidden;

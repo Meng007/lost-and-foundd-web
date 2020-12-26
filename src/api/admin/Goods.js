@@ -124,3 +124,29 @@ export function getGoodsCate() {
         method: 'get'
     })
 }
+
+/**
+ *  用户获取自己的物品列表
+ * @param data
+ * @returns {AxiosPromise}
+ */
+export function getUserList(data) {
+    return request({
+        url: '/goods/my-list',
+        method: 'get',
+        params: data
+    })
+}
+
+/**
+ *  物品搜索
+ * @param data
+ * @returns {AxiosPromise}
+ */
+export function getSearchGoods(data) {
+    return request({
+        url: '/goods/search',
+        method: 'get',
+        params: data
+    })
+}

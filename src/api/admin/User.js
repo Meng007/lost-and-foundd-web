@@ -38,3 +38,13 @@ export function updateUser(data){
     })
 }
 
+/**
+ *  获取用户详情
+ * @returns {AxiosPromise}
+ */
+export function getUserInfo() {
+    return request({
+        url: '/user/info',
+        method: 'get'
+    })
+}

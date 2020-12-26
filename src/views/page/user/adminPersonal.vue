@@ -23,7 +23,7 @@
                             </el-form-item>
                             <el-form-item label-width="90px">
                                 <el-button type="primary" @click="apiUpdateAccount(1)">修改</el-button>
-                                <el-button type="warning" @click="apiResetPassword">重置密码</el-button>
+                                <el-button type="warning">重置密码</el-button>
                             </el-form-item>
                         </el-form>
                     </el-tab-pane>
@@ -85,26 +85,6 @@
                 <el-button type="info" @click="open = false">取消</el-button>
             </div>
         </el-dialog>
-
-        <!--重置密码-->
-        <el-dialog :visible="open2" append-to-body width="350px">
-            <span slot="title" >重置密码</span>
-            <el-form :model="resetPassword" label-width="right">
-                <el-form-item label="旧密码" label-width="90px">
-                    <el-input type="password" placeholder="请输入旧的密码" v-model="resetPassword.oldPassword"/>
-                </el-form-item>
-                <el-form-item label="新密码" label-width="90px">
-                    <el-input type="password" placeholder="请输入新的密码" v-model="resetPassword.password"/>
-                </el-form-item>
-                <el-form-item label="确认密码" label-width="90px">
-                    <el-input type="password" placeholder="请输入新的密码" v-model="resetPassword.confirmPassword"/>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" label-width="90px">
-                <el-button type="primary" @click="apiSubmitPassword">修改</el-button>
-                <el-button type="info" @click="open2 = false">取消</el-button>
-            </div>
-        </el-dialog>
     </div>
 </template>
 
@@ -120,7 +100,6 @@
             return{
                 //开关
                 open: false,
-                open2: false,
                 //弹出层标题
                 dialogTile: '',
                 //头像
@@ -145,12 +124,6 @@
                 //简介
                 intro:{
                     introduce: ''
-                },
-                //重置密码
-                resetPassword:{
-                   password: '',
-                   oldPassword: '',
-                   confirmPassword: ''
                 },
                 //性别
                 sexList: [],
@@ -270,14 +243,8 @@
                         this.apiGetUserInfo()
                     })
                 }
+
                 this.apiGetUserInfo()
-            },
-            //修改密码
-            apiResetPassword(){
-                this.open2 = true
-            },
-            //提交修改密码
-            apiSubmitPassword(){
 
             }
 

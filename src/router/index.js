@@ -3,7 +3,11 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
-
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+  return originalPush.call(this, location).catch(err => err)
+}
 const routes = [
   {
     path: '/',
@@ -124,6 +128,11 @@ const routes = [
         component: ()=>import('../views/page/admin/User.vue')
       },
       {
+        path: '/admin/personal',
+        name: 'AdminPersonal',
+        component: () =>import('../views/page/user/Personal.vue')
+      },
+      {
         path: '/admin/cate',
         name: 'Cate',
         component: () => import('../views/page/admin/Cate.vue')
@@ -140,7 +149,7 @@ const routes = [
     children:[
       {
         path: '/personal',
-        name: 'personal',
+        name: 'UserPersonal',
         component: () =>import('../views/page/user/Personal.vue')
       },
       {

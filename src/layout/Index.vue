@@ -57,6 +57,7 @@
                                     </router-link>
                                     <el-dropdown v-else size="small" placement="bottom">
                                         <el-avatar :size="48" :src="avatar"></el-avatar>
+                                        <i class="el-icon-arrow-down el-icon--right"></i>
                                         <el-dropdown-menu style="text-decoration: none;text-align: center;padding: 0" slot="dropdown">
                                             <router-link style="text-decoration: none" v-if="userType === 1" :to="url.admin">
                                                 <el-dropdown-item icon="el-icon-user-solid">管理中心</el-dropdown-item>

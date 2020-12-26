@@ -106,16 +106,21 @@ export default new Vuex.Store({
       })
     },
 
+    //头像修改后更新
+    SetAvatarUrl({commit},url){
+      commit('SET_AVATAR',url)
+    },
+
     // 退出系统
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.user.token).then(() => {
+        logout(state.user.token).then(res => {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
           commit('SET_ONLINK', false)
           commit('SET_PERMISSIONS', [])
-          removeToken()
-          resolve()
+          removeToken(res)
+          resolve(res)
         }).catch(error => {
           reject(error)
         })

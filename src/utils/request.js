@@ -17,7 +17,6 @@ const service = axios.create({
 service.interceptors.request.use(config => {
   // 是否需要设置 token
   const isToken = (config.headers || {}).isToken === false
-  console.log((config.headers || {}).isToken)
   if (getToken() && !isToken) {
     config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
   }
@@ -46,6 +45,11 @@ service.interceptors.request.use(config => {
           store.dispatch('LogOut').then(() => {
             location.reload() // 为了重新实例化vue-router对象 避免bug
           })
+        }).catch(() =>{
+           /* Message({
+                message: '取消登录！',
+                type: 'info'
+            })*/
         })
       } else if (code === 500) {
         Message({

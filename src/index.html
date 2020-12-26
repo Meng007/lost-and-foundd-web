@@ -16,5 +16,21 @@
 </head>
 <body>
     <div style=""></div>
+
+
+<input type="file" onchange="fineon(this.files)"/>
+<img src="" id="img"/>
+
+<script>
+    window.URL = window.URL || window.webkitURL;
+    function fineon(file) {
+        console.log(file[0])
+
+        var doc = document.getElementById("img")
+        const url = window.URL.createObjectURL(file)
+        console.log(url)
+        doc.src = url;
+    }
+</script>
 </body>
 </html>
