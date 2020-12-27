@@ -43,10 +43,10 @@
                                         </span>
                                         <el-dropdown-menu slot="dropdown" style="padding: 0;text-align: center">
                                             <router-link style="text-decoration: none" :to="url.saveGoods">
-                                                <el-dropdown-item icon="el-icon-s-goods">启事</el-dropdown-item>
+                                                <el-dropdown-item icon="el-icon-s-goods">发布启事</el-dropdown-item>
                                             </router-link>
                                             <router-link style="text-decoration: none" :to="url.saveMessage">
-                                                <el-dropdown-item icon="el-icon-s-comment">留言</el-dropdown-item>
+                                                <el-dropdown-item icon="el-icon-s-comment">发布留言</el-dropdown-item>
                                             </router-link>
                                         </el-dropdown-menu>
                                     </el-dropdown>
@@ -86,7 +86,41 @@
             <el-footer >
                 <el-row type="flex" justify="center">
                     <el-col :span="20">
-                        底部
+                        <div class="index-row">
+                            <div class="wrap clearfix">
+                                <div class="c1">
+                                    <p>快速</p>
+                                    <p>通道</p>
+                                </div>
+                                <div class="c2">
+                                    <a href="http://xtbg.ylu.cn" target="_blank" title="" >新协同办公系统</a>
+                                    <span>|</span>
+                                    <a href="http://mail.ylu.edu.cn" target="_blank" title="" >EDU电子邮箱(教师)</a>
+                                    <span>|</span>
+                                    <a href="http://mail.stu.ylu.edu.cn" target="_blank" title="" >EDU电子邮箱（学生）</a>
+                                    <span>|</span>
+                                    <a href="http://ylu.yiban.cn" target="_blank" title="" >易班社区</a>
+                                    <span>|</span>
+                                    <a href="http://hyw.ylu.cn/" target="_blank" title="" >红叶网</a>
+                                    <span>|</span>
+                                    <a href="info/1037/3393.htm" target="_blank" title="" >实验室</a>
+                                    <span>|</span>
+                                    <a href="http://bxw.ylsfxy.com" target="_blank" title="" >博学网</a>
+                                    <span>|</span>
+                                    <a href="http://210.36.247.32/ysycjyw/" target="_blank" title="" >国培网</a>
+                                    <span>|</span>
+                                    <a href="http://jjy.ylu.cn" target="_blank" title="" >继续教育学院</a>
+                                    <span>|</span>
+                                    <a href="http://210.36.247.111/" target="_blank" title="" >图书馆</a>
+                                    <span>|</span>
+                                    <a href="http://210.36.247.82/xyb" target="_blank" title="" >校友</a>
+                                    <span>|</span>
+                                    <a href="http://210.36.247.31/index.php?m=content&amp;c=index&amp;a=lists&amp;catid=62" target="_blank" title="" >校历</a>
+                                    <span>|</span>
+                                    <a href="info/1037/3387.htm" target="_blank" title="">校车</a>
+                                </div>
+                            </div>
+                        </div>
                     </el-col>
                 </el-row>
             </el-footer>
@@ -194,5 +228,71 @@
       span:hover{
         color: #409eff;
       }
+    }
+
+
+    .index-row {
+        padding: 20px 0;
+        background: #f2f2f2;
+        min-width: 1260px;
+    }
+
+    .wrap {
+        width: 1240px;
+        margin: 0 auto;
+    }
+
+    .c1 {
+        background: #0285ce;
+        float: left;
+        width: 80px;
+        height: 70px;
+        padding-top: 10px;
+        text-align: center;
+        line-height: 30px;
+        color: #fff;
+        font-size: 16px;
+        letter-spacing: 5px;
+    }
+
+    .c2 {
+        margin-left: 100px;
+        line-height: 40px;
+    }
+
+    .clearfix:after {
+        content: '\20';
+        display: block;
+        height: 0;
+        clear: both;
+    }
+
+    .c2 a {
+        white-space: nowrap;
+    }
+
+    .c2 span {
+        display: inline-block;
+        font-size: 10px;
+        transform: scale(0.8);
+        color: #666;
+        margin: 0 27px;
+    }
+
+    .list-group {
+        padding-left: 0px;
+        list-style: none;
+    }
+
+    .list-group-item {
+        border-bottom: 1px solid #e7eaec;
+        border-top: 1px solid #e7eaec;
+        margin-bottom: -1px;
+        padding: 11px 0px;
+        font-size: 13px;
+    }
+
+    .pull-right {
+        float: right !important;
     }
 </style>

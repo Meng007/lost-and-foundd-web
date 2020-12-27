@@ -4,35 +4,38 @@
             <el-form ref="goodsForm" :model="goodsForm" label-position="right" :rules="goodsRules">
                 <el-col :span="12">
                     <el-form-item label="标题" label-width="120px" prop="goodsTitle">
-                        <el-input placeholder="请输入标题内容" v-model="goodsForm.goodsTitle"/>
+                        <el-input clearable placeholder="请输入标题内容" v-model="goodsForm.goodsTitle"/>
                     </el-form-item>
                     <el-row>
                         <el-col :span="12">
                             <el-form-item label-width="120px" label="物品名称" prop="goodsName">
-                                <el-input placeholder="请输入物品名称" v-model="goodsForm.goodsName"/>
+                                <el-input clearable placeholder="请输入物品名称" v-model="goodsForm.goodsName"/>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item label-width="120px" label="启事类型" prop="goodsStatus">
-                                <el-radio v-model="goodsForm.goodsStatus" :label="1">丢失</el-radio>
-                                <el-radio v-model="goodsForm.goodsStatus" :label="2">拾起</el-radio>
+                                <el-radio-group v-model="goodsForm.goodsStatus">
+
+                                    <el-radio v-for="item in goodsType" :key="item.id"  :label="item.dictValue">{{item.dictLabel}}</el-radio>
+                                </el-radio-group>
+
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item label-width="120px" label="联系人" prop="linkman">
-                                <el-input placeholder="请输入联系人" v-model="goodsForm.linkman"/>
+                                <el-input clearable placeholder="请输入联系人" v-model="goodsForm.linkman"/>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item label-width="120px" label="联系电话" prop="phone">
-                                <el-input placeholder="请输入联系电话" v-model="goodsForm.phone"/>
+                                <el-input clearable placeholder="请输入联系电话" v-model="goodsForm.phone"/>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item label-width="120px" label="物品分类" prop="goodsType">
                                 <el-select v-model="goodsForm.goodsType" placeholder="请选择">
                                     <el-option
-                                            v-for="item in goodsType"
+                                            v-for="item in goodsCate"
                                             :key="item.id"
                                             :label="item.cateName"
                                             :value="item.id">
@@ -66,8 +69,8 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
-                            <el-form-item label-width="120px" label="丢（拾）地点" prop="address">
-                                <el-input placeholder="请输入丢（拾）地点" v-model="goodsForm.address"/>
+                            <el-form-item label-width="120px" label="丢(拾)地点" prop="address">
+                                <el-input clearable placeholder="请输入丢（拾）地点" v-model="goodsForm.address"/>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -76,9 +79,11 @@
                     <el-tiptap height="500px" placeholder="请输入描述内容" v-model="goodsForm.goodsContent"
                                :extensions="extensions"></el-tiptap>
                 </el-col>
-                <el-button type="primary" size="mini" v-if="goodsForm.id" @click="apiUpdateGoods">修改</el-button>
-                <el-button type="primary" size="mini" v-else @click="apiSaveGoods">发布</el-button>
-                <el-button type="info" size="mini" @click="apiCancel">取消</el-button>
+               <div>
+                   <el-button style="float: right;margin-right: 10px" type="info" size="mini" @click="apiCancel">取消</el-button>
+                   <el-button style="float: right;margin-right: 10px" type="primary" size="mini" v-if="goodsForm.id" @click="apiUpdateGoods">修改</el-button>
+                   <el-button style="float: right;margin-right: 10px" type="primary" size="mini" v-else @click="apiSaveGoods">发布</el-button>
+               </div>
             </el-form>
         </el-row>
     </div>
@@ -110,6 +115,7 @@
     import {fileUpload, saveGoods, updateGoods} from '@/api/admin/Goods'
     import {getToken} from '@/utils/auth'
     import request from '@/utils/request'
+    import {getDictDataByDictType} from '@/api/admin/DictData'
 
     export default {
         name: "GoodsForm",
@@ -118,6 +124,8 @@
         },
         data() {
             return {
+                //启事类型
+                goodsType: [],
                 loading: false,
                 //日期
                 pickerOptions: {
@@ -182,7 +190,7 @@
                     new Fullscreen()//全屏
                 ],
                 //物品分类
-                goodsType: [],
+                goodsCate: [],
                 headers: {
                     "Authorization": 'Bearer ' + getToken(),
                     "Content-Type": "multipart/form-data;"
@@ -231,12 +239,19 @@
         },
         created() {
             this.apiGetGoodsType()
+            this.apiGetGoodsCate()
         },
         methods: {
+            //启事类型
+            apiGetGoodsType(){
+                getDictDataByDictType('sys_goods_type').then(res =>{
+                    this.goodsType = res.data
+                })
+            },
             /**
              * 获取物品分类
              */
-            apiGetGoodsType() {
+            apiGetGoodsCate() {
                 this.loading = true
                 getSysCateList(1).then(res => {
                     if (res.code !== 200) {
@@ -244,7 +259,7 @@
                         this.loading = false
                         return
                     }
-                    this.goodsType = res.data
+                    this.goodsCate = res.data
                     this.loading = false
                 })
             },
