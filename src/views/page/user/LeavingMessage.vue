@@ -85,24 +85,85 @@
           >导出</el-button>
         </el-col>
       </el-row>
+
+      <!--表格-->
+      <el-table :data="commentList"
+                v-loading="loading"
+      >
+        <el-table-column type="expand">
+          <template slot-scope="scope">
+            <div class="content">
+              {{scope.row.content}}
+            </div>
+            <div class="img">
+              <el-image fit="cover" style="width: 150px;height: 120px"
+                        v-for="(image,index) in scope.row.images"
+                        :src="image.imagePath"
+                        :key="image.id + index + 'A'"
+                        :preview-src-list="scope.row.preview"
+
+              />
+            </div>
+            <div class="tag">
+              <el-tag v-for="(tag,index) in scope.row.tags" :key="tag.id + index + 'B'">{{tag.tagName}}</el-tag>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column type="index"></el-table-column>
+        <el-table-column label="发表日期" prop="createTime"></el-table-column>
+        <el-table-column label="浏览量" prop="views"></el-table-column>
+        <el-table-column label="留言数" prop="messageNum"></el-table-column>
+        <el-table-column label="点赞数" prop="agreeNum"></el-table-column>
+        <el-table-column label="状态" prop="status"></el-table-column>
+        <el-table-column label="操作" prop="">
+          <template slot-scope="scope">
+            <el-button type="text" @click="apiGetMessage(scope.row.id)">查看留言</el-button>
+            <el-button type="text" @click="apiRemoveComment(scope.row.id)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
 </template>
 
 <script>
+  import {getMyCommentList} from '@/api/admin/Comment'
     export default {
         name: "LeavingMessage",
       data(){
         return {
+          time: [],
+          loading: false,
           query:{
             page: 1,
             size: 10,
             total: 0,
             beginTime: [],
-            endTime: '',
-            goodsName: '',
-            goodsType: '',
-            phone: ''
+            endTime: ''
+
           },
+          //
+          commentList: []
+        }
+      },
+      created() {
+        this.apiGetComment()
+      },
+      methods: {
+        //获取我的留言列表
+        apiGetComment() {
+          this.loading = true
+          getMyCommentList(this.query).then(res => {
+            this.commentList = res.data
+            this.loading = false
+          })
+        },
+        //查看留言列表
+        apiGetMessage(id){
+          console.log(id)
+        },
+        //删除
+        apiRemoveComment(id){
+          console.log(id)
         }
       }
     }

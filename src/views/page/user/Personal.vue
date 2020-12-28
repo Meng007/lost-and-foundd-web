@@ -46,6 +46,9 @@
                             <el-form-item  label="用户地址" label-width="90px">
                                 <el-input placeholder="请输入用户地址" v-model="contact.dormitory"/>
                             </el-form-item>
+                            <el-form-item  label="学校" label-width="90px">
+                                <el-input placeholder="请输入用户学校" v-model="contact.school"/>
+                            </el-form-item>
                             <el-form-item label-width="90px">
                                <el-button type="primary" @click="apiUpdateAccount(2)">修改</el-button>
                             </el-form-item>
@@ -140,7 +143,8 @@
                     phone: '',
                     qq: '',
                     email: '',
-                    dormitory: ''
+                    dormitory: '',
+                    school: ''
                 },
                 //简介
                 intro:{
@@ -192,6 +196,7 @@
                     this.contact.weixin = res.data.weixin
                     this.contact.qq = res.data.qq
                     this.contact.id = res.data.user.id
+                    this.contact.school = res.data.school
                     //简介
                     this.intro.introduce = res.data.introduce
                     //头像

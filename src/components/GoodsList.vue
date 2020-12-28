@@ -15,7 +15,7 @@
                         <div class="info">
                             <div class="goods-info">
                                 <el-tooltip effect="light" content="发布日期" placement="top">
-                                    <span class="goods-info-item text"><i class=" my-icon el-icon-date"></i>{{item.createTime}}</span>
+                                    <span class="goods-info-item text"><i class=" my-icon el-icon-time"></i>{{item.createTime}}</span>
                                 </el-tooltip>
                                 <el-tooltip effect="light" content="地址" placement="top">
                                     <span class="goods-info-item text"><i class="my-icon el-icon-location-outline"></i>{{item.address}}</span>
@@ -35,7 +35,7 @@
                             <el-avatar shape="square" :src="item.avatar"></el-avatar>
                             <div class="name">{{item.nickName}}</div>
                             <el-tooltip effect="light" content="丢失日期" placement="top">
-                                <span class="goods-info-item text"><i class="el-icon-date"></i>{{item.loseTime}}</span>
+                                <span class="goods-info-item text"><i class="el-icon-time"></i>{{item.loseTime}}</span>
                             </el-tooltip>
                         </div>
                     </div>

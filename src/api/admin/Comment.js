@@ -25,3 +25,16 @@ export function getCommentList(data) {
         params: data
     })
 }
+
+/**
+ *  我的留言
+ * @param data
+ * @returns {AxiosPromise}
+ */
+export function getMyCommentList(data) {
+    return request({
+        url: '/message/my/list',
+        method: 'get',
+        params: data
+    })
+}
